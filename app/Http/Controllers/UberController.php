@@ -49,9 +49,9 @@ class UberController extends Controller
     }
 
     public function findnearby(Request $request){
-        $lat = $request->post("lat");
-        $lng = $request->post("lng");
-        $direction = $request->post("direction");
+        $lat = $request->get("lat");
+        $lng = $request->get("lng");
+        $direction = $request->get("direction");
 
         $result["status"] = "Error";
         if (empty($lat) || empty($lng)) {
