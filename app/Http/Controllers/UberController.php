@@ -53,13 +53,11 @@ class UberController extends Controller
         $lng = $request->get("lng");
         $direction = $request->get("direction");
 
-        $sql = sprintf('*, 3956 * 2 * ASIN(SQRT( POWER(SIN((%s - abs(latitude)) * pi()/180 / 2),2) + COS(%s * pi()/180 ) 
- * COS(abs(latitude) * pi()/180) * POWER(SIN((%s - longitude) * pi()/180 / 2),2) ))  as distance', $lat, $lat, $lng);
+        $sql = sprintf('3956 * 2 * ASIN(SQRT( POWER(SIN((%s - abs(latitude)) * pi()/180 / 2),2) + COS(%s * pi()/180 ) 
+ * COS(abs(latitude) * pi()/180) * POWER(SIN((%s - longitude) * pi()/180 / 2),2) ))', $lat, $lat, $lng);
 
         $parkinglot = DB::table('parkinglots')
-                            ->select(DB::raw($sql))
-                            ->having('distance', '<', 1000)
-                            ->orderBy('distance')
+                            ->select(DB::raw('*,' . $sql . ' as distance'))
                             ->get();
 
         $result["status"] = "Ok";

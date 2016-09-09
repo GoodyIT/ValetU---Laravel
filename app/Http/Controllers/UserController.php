@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\Uberuser;
 
 class UserController extends Controller
 {
@@ -26,7 +27,7 @@ class UserController extends Controller
      */
     public function show()
     {
-    	$users = User::all();
+    	$users = Uberuser::all();
         return View('user.show', ['users' => $users]);
     }
 }

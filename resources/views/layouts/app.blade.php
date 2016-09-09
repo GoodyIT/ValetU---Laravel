@@ -151,7 +151,7 @@
                 <li><a href="{{ url('/register') }}">Register</a></li>
             @else
                 <li class="menu-home"><a href="/home"><i class="zmdi zmdi-home"></i> Home</a></li>
-                <li class="menu-user-management"><a href="/user"><i class="zmdi zmdi-home"></i> User management</a></li>
+                <li class="menu-user-management"><a href="/user"><i class="zmdi zmdi-home"></i> Rider management</a></li>
             @endif
         </ul>
     </aside>
@@ -167,7 +167,7 @@
     Copyright &copy; 2015 
     <ul class="f-menu">
         <li><a href="/home">Home</a></li>
-        <li><a href="/user">User Management</a></li>
+        <li><a href="/user">Rider Management</a></li>
     </ul>
 </footer>
 <!-- Page Loader -->
