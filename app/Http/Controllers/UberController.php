@@ -49,9 +49,14 @@ class UberController extends Controller
     }
 
     public function findnearby(Request $request){
-        $lat = $request->get("lat");
-        $lng = $request->get("lng");
-        $direction = $request->get("direction");
+        $lat = $request->post("lat");
+        $lng = $request->post("lng");
+        $direction = $request->post("direction");
+
+        $result["status"] = "Error";
+        if (empty($lat) || empty($lng)) {
+            return json_encode($result);
+        }
 
         $sql = sprintf('3956 * 2 * ASIN(SQRT( POWER(SIN((%s - abs(latitude)) * pi()/180 / 2),2) + COS(%s * pi()/180 ) 
  * COS(abs(latitude) * pi()/180) * POWER(SIN((%s - longitude) * pi()/180 / 2),2) ))', $lat, $lat, $lng);
