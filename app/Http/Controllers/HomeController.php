@@ -82,7 +82,7 @@ $user->attachRole($admin); // parameter can be an Role object, array, or id
         return view('home');
     }
 
-     public function parkingReload(Request $request){
+    public function parkingReload(Request $request){
        $locations = $request->input('locations');
        return view('parking', ['locations' => json_encode($locations)]);
      }

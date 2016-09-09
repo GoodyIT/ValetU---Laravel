@@ -17,12 +17,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/createRole', 'HomeController@createRole');
+
+Route::get('/user', 'UserController@show');
+
 Route::get('/home', 'HomeController@create');
 
 Route::post('/tasks', 'HomeController@parkingReload');
 
 Route::get('/home/create', 'HomeController@create');
 Route::post('/home/store', 'HomeController@store');
+
+/*
+ * Uber controller
+*/
 
 Route::get('/uberlogin', function () {
 
@@ -35,6 +43,8 @@ Route::get('/uberlogin', function () {
 
     return redirect('https://login.uber.com/oauth/v2/authorize?'.$query);
 });
+
+
 
 Route::get('/callback', function (Illuminate\Http\Request $request) {
     $http = new \GuzzleHttp\Client;
@@ -61,23 +71,6 @@ Route::get('/callback', function (Illuminate\Http\Request $request) {
     return json_encode((string) $response->getBody(), true);
 });
 
-Route::get('/createRole', 'HomeController@createRole');
+Route::post('/api/v1/savetoken', 'UberController@savetoken');
 
-Route::get('/user', 'UserController@show');
-
-Route::get('/callback2', function (Illuminate\Http\Request $request) {
-	return $request->access_token;
-});
-
-Route::get('/request/{access_token}', function (Illuminate\Http\Request $request) {
-    $http = new \GuzzleHttp\Client;
-
-    $response = $http->get('https://sandbox-api.uber.com/v1/requests', [
-    	'headers' => [
-        'Accept' => 'application/json',
-        'Authorization' => 'Bearer '.$accessToken,
-        ],
-    ]);
-
-    return json_decode((string) $response->getBody(), true);
-});
+Route::get('/api/v1/findnearby', 'UberController@findnearby');
