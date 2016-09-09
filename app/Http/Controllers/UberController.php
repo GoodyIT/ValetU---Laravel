@@ -62,6 +62,9 @@ class UberController extends Controller
                             ->orderBy('distance')
                             ->get();
 
-        return $parkinglot;
+        $result["status"] = "Ok";
+        $result["places"] = $parkinglot;
+
+        return json_encode($result);
     }
 }
