@@ -30,4 +30,6 @@ class UserController extends Controller
     	$users = Uberuser::all();
         return View('user.show', ['users' => $users]);
     }
+
+   
 }

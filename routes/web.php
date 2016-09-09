@@ -44,9 +44,6 @@ Route::get('/uberlogin', function () {
     return redirect('https://login.uber.com/oauth/v2/authorize?'.$query);
 });
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
 
 Route::get('/callback', function (Illuminate\Http\Request $request) {
     $http = new \GuzzleHttp\Client;
