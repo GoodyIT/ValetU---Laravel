@@ -82,18 +82,17 @@ class UberController extends Controller
         $name  =  $request->get("name");
         $email = $request->get("email");
 
-        $result = [];
         $result["status"] = "error";
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-            $filecontents = $token . $name . $email;
+          //  $filecontents = $token . $name . $email;
             // file_put_contents("test.txt", json_encode($filecontents)); 
            /* $users = DB::table('uberusers')
                 ->where('email', $email)
                 ->get();*/
 
-                $filecontents .=  json_encode($users);
+            //    $filecontents .=  json_encode($users);
               //   file_put_contents("test.txt", json_encode($filecontents)); 
 
             /*if (isset($users) && count($users) == 0 ) {
@@ -119,7 +118,7 @@ class UberController extends Controller
             $result["status"] = "Ok";
            
 
-            $filecontents .= json_encode($result);
+          //  $filecontents .= json_encode($result);
             // file_put_contents("test.txt", json_encode($filecontents)); 
 
             return json_encode($result);
