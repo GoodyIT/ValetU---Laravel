@@ -58,13 +58,12 @@ class UberController extends Controller
             return json_encode($result);
         }
 
-        $sql = sprintf('3956 * 2 * ASIN(SQRT( POWER(SIN((%s - abs(latitude)) * pi()/180 / 2),2) + COS(%s * pi()/180 ) 
- * COS(abs(latitude) * pi()/180) * POWER(SIN((%s - longitude) * pi()/180 / 2),2) ))', $lat, $lat, $lng);
+        $sql = "*, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+ * COS(abs(latitude) * pi()/180) * POWER(SIN(($lng - longitude) * pi()/180 / 2),2) )) as distance from parkinglots having distance < 500000";
 
-        $parkinglot = DB::table('parkinglots')
-                            ->select(DB::raw('*,' . $sql . ' as distance'))
-                            ->get();
-
+        $parkinglot = DB::select(DB::raw("select *, 3956 * 2 * ASIN(SQRT( POWER(SIN((37 - abs(latitude)) * pi()/180 / 2),2) + COS(37 * pi()/180 ) 
+ * COS(abs(latitude) * pi()/180) * POWER(SIN((37 - longitude) * pi()/180 / 2),2) )) as distance from parkinglots "));
+                            
         $result["status"] = "Ok";
         $result["places"] = $parkinglot;
 
