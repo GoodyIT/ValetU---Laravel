@@ -87,9 +87,12 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
+            $filecontents = "";
             $users = DB::table('uberusers')
                 ->where('email', $email)
                 ->get()->first();
+
+                $filecontents .= json_encode($users);
 
             if (empty($users->name)) {
                 $newUser = new Uberuser;
@@ -97,18 +100,22 @@ class UberController extends Controller
                 $newUser->email = $email;
                 $newUser->uber_credential = $token;
                 $newUser->save();
+                $filecontents .= "empty";
 
             } else {
                 DB::table('uberusers')
                     ->where('email', $email)
                     ->update(['uber_credential' => $token]);
+
+                    $filecontents .= "update";
             }
 
 
             $result["status"] = "Ok";
             $result["test"] = "test";
 
-            file_put_contents("test.txt", json_encode($result)); 
+            $filecontents .= json_encode($result);
+            file_put_contents("test.txt", json_encode($filecontents)); 
 
             return json_encode($result);
         }
