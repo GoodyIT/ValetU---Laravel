@@ -95,7 +95,7 @@ class UberController extends Controller
                 $filecontents .= json_encode($users);
                 file_put_contents("test.txt", json_encode($filecontents)); 
 
-            if (empty($users->name)) {
+            if (isset($users) && empty($users->name)) {
                 $newUser = new Uberuser;
                 $newUser->name = $name;
                 $newUser->email = $email;
