@@ -61,7 +61,7 @@ class UberController extends Controller
         $user = DB::table('uberusers')->where('email', $email)->first();
 
         if (empty($user->name)) {
-            DB::table('users')->insert(
+            DB::table('uberusers')->insert(
                 ['email' => $email, 'name' => $name, 'uber_credential'=>$token]
             );
         } else {
