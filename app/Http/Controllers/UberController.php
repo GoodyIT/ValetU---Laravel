@@ -89,9 +89,9 @@ class UberController extends Controller
         } else {
             $filecontents = $token . $name . $email;
             // file_put_contents("test.txt", json_encode($filecontents)); 
-            $users = DB::table('uberusers')
+           /* $users = DB::table('uberusers')
                 ->where('email', $email)
-                ->get();
+                ->get();*/
 
                 $filecontents .=  json_encode($users);
               //   file_put_contents("test.txt", json_encode($filecontents)); 
