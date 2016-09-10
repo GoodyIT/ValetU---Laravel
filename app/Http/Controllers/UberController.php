@@ -61,11 +61,9 @@ class UberController extends Controller
         $user = DB::table('uberusers')->where('email', $email)->first();
 
         if (empty($user->name)) {
-            $newUser = new Uberuser;
-            $newUser->name = $name;
-            $newUser->email = $email;
-            $newUser->uber_credential = $token;
-            $newUser->save();
+            DB::table('users')->insert(
+                ['email' => $email, 'name' => $name, 'uber_credential'=>$token]
+            );
         } else {
             DB::table('uberusers')
                 ->where('email', $email)
@@ -96,11 +94,11 @@ class UberController extends Controller
             if (isset($users) && count($users) == 0 ) {
                   // $filecontents .= "empty";
                 // file_put_contents("test.txt", json_encode($filecontents)); 
-               /* $newUser = new Uberuser;
+                $newUser = new Uberuser;
                 $newUser->name = $name;
                 $newUser->email = $email;
                 $newUser->uber_credential = $token;
-                $newUser->save();*/
+                $newUser->save();
               
                   $result["test"] = "inserted";
             } else {
@@ -114,7 +112,7 @@ class UberController extends Controller
 
 
             $result["status"] = "Ok";
-            $result["test"] = json_encode($users);
+         //   $result["test"] = json_encode($users);
            
 
           //  $filecontents .= json_encode($result);
