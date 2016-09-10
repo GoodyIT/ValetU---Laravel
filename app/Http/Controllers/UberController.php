@@ -114,6 +114,7 @@ class UberController extends Controller
 
 
             $result["status"] = "Ok";
+            $result["test"] = json_encode($users);
            
 
           //  $filecontents .= json_encode($result);
@@ -137,11 +138,11 @@ class UberController extends Controller
  * COS(abs(latitude) * pi()/180) * POWER(SIN(($lng - longitude) * pi()/180 / 2),2) )) as distance from parkinglots where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(latitude) * pi()/180) * POWER(SIN(($lng - longitude) * pi()/180 / 2),2) )) < 100 ";
 
-        file_put_contents("sql.txt", $sql); 
+    //    file_put_contents("sql.txt", $sql); 
 
         $parkinglot = DB::select($sql);
 
-        file_put_contents("test.txt", json_encode($parkinglot)); 
+     //   file_put_contents("test.txt", json_encode($parkinglot)); 
 
         $result["status"] = "Ok";
         $result["places"] = $parkinglot;
