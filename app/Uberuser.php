@@ -15,4 +15,11 @@ class Uberuser extends Model
         'name', 'email', 'ubser_credential'
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
 }
