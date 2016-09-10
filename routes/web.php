@@ -74,4 +74,6 @@ Route::get('/uber/v1/savetoken', 'UberController@savetoken');
 
 Route::get('/uber/v1/logintoken', 'UberController@logintoken');
 
+Route::get('/uber/v1/test', 'UberController@test');
+
 Route::get('/uber/v1/findnearby', 'UberController@findnearby');

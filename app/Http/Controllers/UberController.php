@@ -50,7 +50,7 @@ class UberController extends Controller
 
     public function logintoken(Request $request){
         $token = $request->get("access_token");
-        $name = $request->get("name");
+        $name  =  $request->get("name");
         $email = $request->get("email");
 
         $result["status"] = "error";
@@ -74,6 +74,12 @@ class UberController extends Controller
 
         return json_encode($result);
     }
+
+     public function test(Request $request){
+        $result["status"] = "Ok";
+
+          return json_encode($result);
+     }
 
     public function findnearby(Request $request){
         $lat = $request->get("lat");
