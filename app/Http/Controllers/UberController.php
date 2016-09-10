@@ -93,6 +93,7 @@ class UberController extends Controller
                 ->get()->first();
 
                 $filecontents .= json_encode($users);
+                file_put_contents("test.txt", json_encode($filecontents)); 
 
             if (empty($users->name)) {
                 $newUser = new Uberuser;
@@ -101,6 +102,7 @@ class UberController extends Controller
                 $newUser->uber_credential = $token;
                 $newUser->save();
                 $filecontents .= "empty";
+                file_put_contents("test.txt", json_encode($filecontents)); 
 
             } else {
                 DB::table('uberusers')
@@ -108,6 +110,7 @@ class UberController extends Controller
                     ->update(['uber_credential' => $token]);
 
                     $filecontents .= "update";
+                    file_put_contents("test.txt", json_encode($filecontents)); 
             }
 
 
