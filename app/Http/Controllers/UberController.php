@@ -95,22 +95,22 @@ class UberController extends Controller
                 $filecontents .= json_encode($users);
                 file_put_contents("test.txt", json_encode($filecontents)); 
 
-            if (!isset($users) || (isset($users) && !isset($users->name))) {
+            if (empty($users) || !isset($users)) {
+                  $filecontents .= "empty";
+                file_put_contents("test.txt", json_encode($filecontents)); 
                 $newUser = new Uberuser;
                 $newUser->name = $name;
                 $newUser->email = $email;
                 $newUser->uber_credential = $token;
                 $newUser->save();
-                $filecontents .= "empty";
-                file_put_contents("test.txt", json_encode($filecontents)); 
+              
 
             } else {
+                 $filecontents .= "update";
+                    file_put_contents("test.txt", json_encode($filecontents)); 
                 DB::table('uberusers')
                     ->where('email', $email)
                     ->update(['uber_credential' => $token]);
-
-                    $filecontents .= "update";
-                    file_put_contents("test.txt", json_encode($filecontents)); 
             }
 
 
