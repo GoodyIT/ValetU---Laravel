@@ -94,11 +94,11 @@ class UberController extends Controller
             if (isset($users) && count($users) == 0 ) {
                   // $filecontents .= "empty";
                 // file_put_contents("test.txt", json_encode($filecontents)); 
-                DB::table('uberusers')->insert(
-                ['email' => $email, 'name' => $name, 'uber_credential'=>$token]
-            );
+                DB::table('users')->insertGetId(
+                    ['email' => $email, 'name' => $name, 'uber_credential' => $token]
+                );
               
-                  $result["test"] = "inserted";
+                $result["test"] = "inserted";
             } else {
                  // $filecontents .= "update";
                     // file_put_contents("test.txt", json_encode($filecontents)); 
