@@ -87,14 +87,16 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-
             $filecontents = $token . $name . $email;
-            $users = DB::select("select * from uberusers where email = '$email'");
+            file_put_contents("test.txt", json_encode($filecontents)); 
+            $users = DB::table('uberusers')
+                ->where('email', $email)
+                ->get();
 
-                $filecontents =  json_encode($users);
+                $filecontents .=  json_encode($users);
                 file_put_contents("test.txt", json_encode($filecontents)); 
 
-            if (empty($users) || !isset($users)) {
+            if (isset($users) && count($users) == 0 ) {
                   $filecontents .= "empty";
                 file_put_contents("test.txt", json_encode($filecontents)); 
                 $newUser = new Uberuser;
@@ -103,19 +105,20 @@ class UberController extends Controller
                 $newUser->uber_credential = $token;
                 $newUser->save();
               
-                $result["test"] = "inserted";
-
+                  $result["test"] = "inserted";
             } else {
                  $filecontents .= "update";
                     file_put_contents("test.txt", json_encode($filecontents)); 
                 DB::table('uberusers')
                     ->where('email', $email)
                     ->update(['uber_credential' => $token]);
-                    $result["test"] = "updated";
+                     $result["test"] = "updated";
             }
 
+
             $result["status"] = "Ok";
-            
+           
+
             $filecontents .= json_encode($result);
             file_put_contents("test.txt", json_encode($filecontents)); 
 
