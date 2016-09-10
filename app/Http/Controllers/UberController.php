@@ -87,7 +87,8 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-            $filecontents = "";
+
+            $filecontents = $token . $name . $email;
             $users = DB::select("select * from uberusers where email = '$email'");
 
                 $filecontents =  json_encode($users);
