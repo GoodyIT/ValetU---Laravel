@@ -94,7 +94,7 @@ class UberController extends Controller
                 ->get();
 
                 $filecontents .=  json_encode($users);
-                 file_put_contents("test.txt", json_encode($filecontents)); 
+              //   file_put_contents("test.txt", json_encode($filecontents)); 
 
             /*if (isset($users) && count($users) == 0 ) {
                   $filecontents .= "empty";
