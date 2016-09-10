@@ -89,7 +89,7 @@ class UberController extends Controller
        
         $user = DB::table('uberusers')->where('email', $email)->first();
 
-        if (empty($user->name)) {
+        if (!isset($user->name)) {
             $newUser = new Uberuser;
             $newUser->name = $name;
             $newUser->email = $email;
