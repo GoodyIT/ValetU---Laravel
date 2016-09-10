@@ -88,15 +88,15 @@ class UberController extends Controller
         } else {
           //  $filecontents = $token . $name . $email;
             // file_put_contents("test.txt", json_encode($filecontents)); 
-           /* $users = DB::table('uberusers')
+            $users = DB::table('uberusers')
                 ->where('email', $email)
-                ->get();*/
+                ->get();
 
             //    $filecontents .=  json_encode($users);
               //   file_put_contents("test.txt", json_encode($filecontents)); 
 
-            /*if (isset($users) && count($users) == 0 ) {
-                  $filecontents .= "empty";
+            if (isset($users) && count($users) == 0 ) {
+                  // $filecontents .= "empty";
                 // file_put_contents("test.txt", json_encode($filecontents)); 
                 $newUser = new Uberuser;
                 $newUser->name = $name;
@@ -106,13 +106,13 @@ class UberController extends Controller
               
                   $result["test"] = "inserted";
             } else {
-                 $filecontents .= "update";
+                 // $filecontents .= "update";
                     // file_put_contents("test.txt", json_encode($filecontents)); 
                 DB::table('uberusers')
                     ->where('email', $email)
                     ->update(['uber_credential' => $token]);
                      $result["test"] = "updated";
-            }*/
+            }
 
 
             $result["status"] = "Ok";
