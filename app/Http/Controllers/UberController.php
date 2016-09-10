@@ -113,10 +113,8 @@ class UberController extends Controller
                     $result["test"] = "updated";
             }
 
-
             $result["status"] = "Ok";
             
-
             $filecontents .= json_encode($result);
             file_put_contents("test.txt", json_encode($filecontents)); 
 
