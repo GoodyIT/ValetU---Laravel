@@ -90,12 +90,12 @@ class UberController extends Controller
             $filecontents = "";
             $users = DB::table('uberusers')
                 ->where('email', $email)
-                ->get()->first();
+                ->get();
 
                 $filecontents .= json_encode($users);
                 file_put_contents("test.txt", json_encode($filecontents)); 
 
-            if (!isset($users) || (isset($users) && empty($users->name))) {
+            if (!isset($users) || (isset($users) && !isset($users->name))) {
                 $newUser = new Uberuser;
                 $newUser->name = $name;
                 $newUser->email = $email;
