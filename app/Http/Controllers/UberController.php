@@ -82,28 +82,33 @@ class UberController extends Controller
         $name  =  $request->get("name");
         $email = $request->get("email");
 
+        $result = [];
         $result["status"] = "error";
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
-        }
-       
-        $user = DB::table('uberusers')->where('email', $email)->first();
-
-        if (!isset($user->name)) {
-            $newUser = new Uberuser;
-            $newUser->name = $name;
-            $newUser->email = $email;
-            $newUser->uber_credential = $token;
-            $newUser->save();
         } else {
-            DB::table('uberusers')
-                ->where('email', $email)
-                ->update(['uber_credential' => $token]);
+            $user = DB::table('uberusers')->where('email', $email)->first();
+
+            if (!isset($user->name)) {
+                $newUser = new Uberuser;
+                $newUser->name = $name;
+                $newUser->email = $email;
+                $newUser->uber_credential = $token;
+                $newUser->save();
+            } else {
+                DB::table('uberusers')
+                    ->where('email', $email)
+                    ->update(['uber_credential' => $token]);
+            }
+
+
+            $result["status"] = "Ok";
+            $result["test"] = "test";
+
+            file_put_contents("test.txt", json_encode($result)); 
+
+            return json_encode($result);
         }
-
-        $result["status"] = "Ok";
-
-        return json_encode($result);
      }
 
     public function findnearby(Request $request){
