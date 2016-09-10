@@ -70,6 +70,6 @@ Route::get('/callback', function (Illuminate\Http\Request $request) {
     return json_encode((string) $response->getBody(), true);
 });
 
-Route::post('/uber/v1/savetoken', 'UberController@savetoken');
+Route::get('/uber/v1/savetoken', 'UberController@savetoken');
 
 Route::get('/uber/v1/findnearby', 'UberController@findnearby');
