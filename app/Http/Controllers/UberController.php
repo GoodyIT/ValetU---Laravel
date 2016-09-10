@@ -87,14 +87,17 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-            $user = DB::table('uberusers')->where('email', $email)->first();
+            $users = DB::table('uberusers')
+                ->where('email', $email)
+                ->get()->first();
 
-            if (!isset($user->name)) {
+            if (empty($users->name)) {
                 $newUser = new Uberuser;
                 $newUser->name = $name;
                 $newUser->email = $email;
                 $newUser->uber_credential = $token;
                 $newUser->save();
+
             } else {
                 DB::table('uberusers')
                     ->where('email', $email)
