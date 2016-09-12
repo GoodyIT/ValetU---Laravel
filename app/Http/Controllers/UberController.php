@@ -38,7 +38,8 @@ class UberController extends Controller
 
                 $result["test"] = "inserted";
             } else {
-                 $sql = sprintf("UPDATE TABLE SET name='%s', email='%s' and uber_credential='%s'", $name, $email, $token);
+                 $sql = sprintf("UPDATE uberusers SET name='%s', uber_credential='%s' where email='%s'", $name, $token, $email);
+                  $result["test"] = "updated";
             }
             DB::statement($sql);
 
