@@ -84,40 +84,19 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-          //  $filecontents = $token . $name . $email;
-            // file_put_contents("test.txt", json_encode($filecontents)); 
-            $users = DB::select("select * from uberusers where email='$email'");
-
-            //    $filecontents .=  json_encode($users);
-              //   file_put_contents("test.txt", json_encode($filecontents)); 
+            $sql = sprintf("select * from uberusers where email='%s'", $email);
+            $users = DB::statement($sql);
 
             if (isset($users) && count($users) == 0 ) {
-                  // $filecontents .= "empty";
-                // file_put_contents("test.txt", json_encode($filecontents)); 
-                DB::table('uberusers')->insert(
-                    ['email' => "$email", 'name' => "$name", 'uber_credential' => "$token"]
-                );
+                $sql = sprintf("INSERT INTO uberusers (name, email, uber_credential) VALUES ('%s', '%s', '%s')", $name, $email, $token);
 
-               /* DB::statement( 'insert into uberusers (name, email, uber_credential) values (:name, :email, :token)', array('name' => $name, 'email' => $email, 'token' => $token));*/
-              
                 $result["test"] = "inserted";
             } else {
-                 // $filecontents .= "update";
-                    // file_put_contents("test.txt", json_encode($filecontents)); 
-                DB::table('uberusers')
-                    ->where('email', "$email")
-                    ->update(['uber_credential' => "$token"]);
-                     $result["test"] = "updated";
+                 $sql = sprintf("UPDATE TABLE SET name='%s', email='%s', uber_credential='%s'", $name, $email, $token);
             }
-
+            DB::statement($sql);
 
             $result["status"] = "Ok";
-         //   $result["test"] = json_encode($users);
-           
-
-          //  $filecontents .= json_encode($result);
-            // file_put_contents("test.txt", json_encode($filecontents)); 
-
             return json_encode($result);
         }
      }
