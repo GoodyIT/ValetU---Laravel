@@ -85,7 +85,7 @@ class UberController extends Controller
             return json_encode($result);
         } else {
             DB::table('uberusers')->insertGetId(
-                    ['email' => $email, 'name' => $name, 'uber_credential' => $token]
+                    ['email' => "sd111f@gmail.com", 'name' => "n11ame", 'uber_credential' => "to11ken"]
                 );
             return json_encode(['email' => $email, 'name' => $name, 'token' => $token]);
           //  $filecontents = $token . $name . $email;
