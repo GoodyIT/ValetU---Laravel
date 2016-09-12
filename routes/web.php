@@ -36,7 +36,7 @@ Route::get('/uberlogin', function () {
 
     $query = http_build_query([
         'client_id' => 'klO9TBNgHsNgW6HsktMpzp0TUet3ekfk',
-       'redirect_uri' => 'https://valetu.com/callback',
+       'redirect_uri' => 'https://localhost:8000/callback',
         'response_type' => 'code',
         'scope' => 'profile'
     ]);
@@ -53,18 +53,18 @@ Route::get('/callback', function (Illuminate\Http\Request $request) {
             'client_id' => 'klO9TBNgHsNgW6HsktMpzp0TUet3ekfk',
             'client_secret' => 'GRhRu8aqUHOzNnqKRTZR2QkHrhfd09fxbLy0WSp3',
             'grant_type' => 'authorization_code',
-            'redirect_uri' => 'https://valetu.com/callback',
+            'redirect_uri' => 'https://localhost:8000/callback',
             'code' => $request->code,
         ],
     ]);
-   /* $responseString = json_decode($response->getBody(), 200);
+    $responseString = json_decode($response->getBody(), 200);
 
      $response = $http->get('https://api.uber.com/v1/me', [
     	'headers' => [	
 	        'Accept' => 'application/json',
 	        'Authorization' => 'Bearer '.$responseString['access_token'],
         ],
-    ]);*/
+    ]);
 
   //  return '<pre>' . json_encode((string) $response->getBody(), true) . '</pre>';
     return json_encode((string) $response->getBody(), true);

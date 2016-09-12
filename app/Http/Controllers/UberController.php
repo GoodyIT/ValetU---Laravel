@@ -76,7 +76,7 @@ class UberController extends Controller
     }*/
 
      public function test(Request $request){
-        $token =  $request->get("access_token");
+        $token =  $request->get("token");
         $name  =  $request->get("name");
         $email = $request->get("email");
 
@@ -84,6 +84,8 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
+
+            return $email . $token . $name;
           //  $filecontents = $token . $name . $email;
             // file_put_contents("test.txt", json_encode($filecontents)); 
             $users = DB::select("select * from uberusers where email='$email'");
@@ -132,18 +134,14 @@ class UberController extends Controller
             return json_encode($result);
         }
 
-        $sql = "select *, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
- * COS(abs(latitude) * pi()/180) * POWER(SIN(($lng - longitude) * pi()/180 / 2),2) )) as distance from parkinglots where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
- * COS(abs(latitude) * pi()/180) * POWER(SIN(($lng - longitude) * pi()/180 / 2),2) )) < 16 ";
+        $sql = "select t1.address, t1.latitude, t1.longitude, t2.request, t2.photourl, t2.comment, t2.star, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+ * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 left join trips as t2 on t1.id = t2.parkinglot_id where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+ * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";
 
         /*$sql = "select *, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(latitude) * pi()/180) * POWER(SIN(($lng - longitude) * pi()/180 / 2),2) )) as distance from parkinglots having distance < 1600";*/
 
-    //    file_put_contents("sql.txt", $sql); 
-
         $parkinglot = DB::select($sql);
-
-     //   file_put_contents("test.txt", json_encode($parkinglot)); 
 
         $result["status"] = "Ok";
         $result["places"] = $parkinglot;
