@@ -85,7 +85,7 @@ class UberController extends Controller
             return json_encode($result);
         } else {
 
-            return json_encode(['email' => $email]);
+            return json_encode(['email' => $email, 'name' => $name, 'token' => $token]);
           //  $filecontents = $token . $name . $email;
             // file_put_contents("test.txt", json_encode($filecontents)); 
             $users = DB::select("select * from uberusers where email='$email'");
