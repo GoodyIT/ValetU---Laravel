@@ -21,61 +21,7 @@ class UberController extends Controller
        
     }
 
-    /*public function savetoken(Request $request){
-    	$token = $request->get("access_token");
-        $name = $request->get("name");
-        $email = $request->get("email");
-
-        $result["status"] = "error";
-        if (!empty($email) && !empty($token) && !empty($name)) {
-            $user = DB::table('uberusers')->where('email', $email)->first();
-
-            if (empty($user->name)) {
-                $newUser = new Uberuser;
-                $newUser->name = $name;
-                $newUser->email = $email;
-                $newUser->uber_credential = $token;
-                $newUser->save();
-            } else {
-                DB::table('uberusers')
-                    ->where('email', $email)
-                    ->update(['uber_credential' => $token]);
-            }
-
-            $result["status"] = "Ok";
-        }
-
-    	return json_encode($result);
-    }
-
-    public function logintoken(Request $request){
-        $token =  $request->get("access_token");
-        $name  =  $request->get("name");
-        $email = $request->get("email");
-
-        $result["status"] = "error";
-        if (empty($email) || empty($token) || empty($name)) {
-            return json_encode($result);
-        }
-       
-        $user = DB::table('uberusers')->where('email', $email)->first();
-
-        if (empty($user->name)) {
-            DB::table('uberusers')->insert(
-                ['email' => $email, 'name' => $name, 'uber_credential'=>$token]
-            );
-        } else {
-            DB::table('uberusers')
-                ->where('email', $email)
-                ->update(['uber_credential' => $token]);
-        }
-
-        $result["status"] = "Ok";
-
-        return json_encode($result);
-    }*/
-
-     public function test(Request $request){
+     public function savetoken(Request $request){
         $token =  $request->get("token");
         $name  =  $request->get("name");
         $email = $request->get("email");
