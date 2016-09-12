@@ -84,7 +84,9 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-
+            DB::table('uberusers')->insertGetId(
+                    ['email' => $email, 'name' => $name, 'uber_credential' => $token]
+                );
             return json_encode(['email' => $email, 'name' => $name, 'token' => $token]);
           //  $filecontents = $token . $name . $email;
             // file_put_contents("test.txt", json_encode($filecontents)); 
