@@ -87,8 +87,8 @@ class UberController extends Controller
                 if ($price->localized_display_name == "uberX") {
                     $result["data"][$lotkey]['price'] = [];
                     $result["data"][$lotkey]['place'] = [];
-                    array_push($result["data"][$lotkey]['place'], $price);
-                    array_push($result["data"][$lotkey]['price'], $price);
+                    array_push($result["data"][$lotkey]['place'], $parkinglot);
+                    array_push($result["data"][$lotkey]['price'], ['estimate' => $price->estimate]);
                     continue;
                 }
             }
