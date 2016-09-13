@@ -67,8 +67,35 @@ Route::get('/callback', function (Illuminate\Http\Request $request) {
     ]);
 
   //  return '<pre>' . json_encode((string) $response->getBody(), true) . '</pre>';
-    return json_encode((string) $response->getBody(), true);
+    return '<pre>' . json_encode((string) $response->getBody(), true). '</pre>';;
 });
+
+Route::get('/price', function (Illuminate\Http\Request $request) {
+    $http = new \GuzzleHttp\Client;
+
+    $response = $http->get('https://api.uber.com/v1/estimates/price', [
+        'form_params' => [
+            'start_latitude' => '37.625732',
+            'start_longitude' => '-122.377807',
+            'end_latitude' => '37.785',
+            'end_longitude' => '-122.406677',
+            'server_token' => 'VcR8_A-Xex3YhVGTUvjDWBQhDa3ygeBFHBXU73L7',
+        ],
+    ]);
+  /*  $responseString = json_decode($response->getBody(), 200);
+
+     $response = $http->get('https://api.uber.com/v1/me', [
+        'headers' => [  
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$responseString['access_token'],
+        ],
+    ]);*/
+
+  //  return '<pre>' . json_encode((string) $response->getBody(), true) . '</pre>';
+    return '<pre>' .json_encode((string) $response->getBody(), true). '</pre>';
+});
+
+
 
 Route::get('/uber/v1/savetoken', 'UberController@savetoken');
 
