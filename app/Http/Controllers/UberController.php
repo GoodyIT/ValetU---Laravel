@@ -88,7 +88,7 @@ class UberController extends Controller
                     $result["data"][$lotkey]['price'] = [];
                     $result["data"][$lotkey]['place'] = [];
                     array_push($result["data"][$lotkey]['place'], $parkinglot);
-                    array_push($result["data"][$lotkey]['price'], ['estimate' => $price->estimate]);
+                    array_push($result["data"][$lotkey]['price'], $price);
                     continue;
                 }
             }
