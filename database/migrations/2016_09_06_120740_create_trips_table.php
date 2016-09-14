@@ -21,7 +21,7 @@ class CreateTripsTable extends Migration
             $table->integer('parkinglot_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('request')->unsigned(); // open, pending, closed(fare)
-            $table->text('photourl');
+            $table->string('photourl');
             $table->text('comment');
             $table->integer('star')->unsigned();
             $table->timestamps();

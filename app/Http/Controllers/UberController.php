@@ -66,13 +66,27 @@ class UberController extends Controller
 
         $parkinglots =  DB::select($sql);
 
+ /*       $parkinglots = DB::table('parkinglots')
+                        ->leftJoin('trips', 'parkinglots.id', '=', 'trips.parkinglot_id')
+                        ->leftJoin('users', 'users.id', '=', 'trips.user_id')
+                        ->select(DB::raw(' parkinglots.*, trips.*,users.*'))
+                         ->where('status', '<>', 1)
+                         ->groupBy('status')
+                         ->get();
+
+        return $parkinglots;
+*/
         $result["status"] = "Ok";
         $result["data"] = [];
 
         foreach ($parkinglots as $lotkey => $parkinglot) {
             $result["data"][$parkinglot->address] = [];
             foreach ($parkinglot as $key => $value) {
-                $result["data"][$parkinglot->address][$key] = $value;
+                if ($key == 'comment' || $key == 'photourl') {
+                    $result["data"][$parkinglot->address][$key] = explode (',', $value);
+                } else {
+                    $result["data"][$parkinglot->address][$key] = $value;
+                }
             }
         }
 
