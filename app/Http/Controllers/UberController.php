@@ -60,60 +60,68 @@ class UberController extends Controller
             return json_encode($result);
         }
 
-        $sql = "select t1.address, t1.latitude, t1.longitude, t2.request, t2.photourl, t2.comment, t2.star, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
- * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 left join trips as t2 on t1.id = t2.parkinglot_id where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+        /*$sql = "select t1.id, t1.address, t1.latitude, t1.longitude, t2.request, t2.photourl, t2.comment, t2.star, t3.name, t3.email, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+ * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 join trips as t2 on t1.id = t2.parkinglot_id join uberusers as t3 on t2.user_id = t3.id where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+ * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";*/
+        $sql = "select t1.id, t1.address, t1.latitude, t1.longitude, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+ * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";
 
         $parkinglots =  DB::select($sql);
 
- /*       $parkinglots = DB::table('parkinglots')
-                        ->leftJoin('trips', 'parkinglots.id', '=', 'trips.parkinglot_id')
-                        ->leftJoin('users', 'users.id', '=', 'trips.user_id')
-                        ->select(DB::raw(' parkinglots.*, trips.*,users.*'))
-                         ->where('status', '<>', 1)
-                         ->groupBy('status')
-                         ->get();
-
-        return $parkinglots;
-*/
         $result["status"] = "Ok";
         $result["data"] = [];
 
         foreach ($parkinglots as $lotkey => $parkinglot) {
-            $result["data"][$parkinglot->address] = [];
-            foreach ($parkinglot as $key => $value) {
-                if ($key == 'comment' || $key == 'photourl') {
-                    array_push($result["data"][$parkinglot->address], $key => explode (',', $value);
-                } else {
-                    array_push($result["data"][$parkinglot->address], $key => $value);
-                }
-            }
-        }
+            $data = [];
 
-        foreach ($result["data"] as $lotkey => $parkinglot) {
             $http = new \GuzzleHttp\Client;
-
             $response = $http->get('https://api.uber.com/v1/estimates/price', [
                 'form_params' => [
                     'start_latitude' => $lat,
                     'start_longitude' => $lng,
-                    'end_latitude' => $parkinglot['latitude'],
-                    'end_longitude' => $parkinglot['longitude'],
+                    'end_latitude' => $parkinglot->latitude,
+                    'end_longitude' => $parkinglot->longitude,
                     'server_token' => 'VcR8_A-Xex3YhVGTUvjDWBQhDa3ygeBFHBXU73L7',
                 ],
             ]);
 
+              foreach ($parkinglot as $_key => $_value) {
+                $data[$_key] = $_value;
+            }
+
+           /* $comments = DB::table('trips')
+                ->join('uberusers', 'trips.user_id', '=', 'uberusers.id')
+                ->select('trips.*', 'contacts.phone', 'orders.price')
+                ->where('trips.parkinglot_id', '=', $parkinglot->id)
+                ->get()->asArray();*/
+
+            $sql = "select t1.id, t1.photourl, t1.comment, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 where t1.parkinglot_id = $parkinglot->id";
+
+            $comments =  DB::select($sql);
+
+            $data['comments'] = [];
+            foreach ($comments as $commentkey => $commentvalue) {
+                array_push($data['comments'], $commentvalue);
+            }
+
             $prices = json_decode($response->getBody())->prices;
             foreach ($prices as $price) {
                 if ($price->localized_display_name == "uberX") {
-                    array_push($result["data"][$parkinglot['address']], 'estimate' => $price->estimate);
-                    array_push($result["data"][$parkinglot['address']], 'duration' => $price->duration);
-                    array_push($result["data"][$parkinglot['address']], 'distance' => $price->distance);
+                    $data['estimate'] = $price->estimate;
+                    $data['duration'] = $price->duration;
+                    $data['distance'] = $price->distance;
                     continue;
                 }
             }
-        }
 
+            array_push($result["data"], $data);
+        }
+/*
+           foreach ($parkinglots as $lotkey => $parkinglot) {
+            $result["data"][$lotkey] = $parkinglot;
+        }
+*/
 
         return json_encode($result);
     }
