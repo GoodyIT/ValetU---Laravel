@@ -83,9 +83,9 @@ class UberController extends Controller
             $result["data"][$parkinglot->address] = [];
             foreach ($parkinglot as $key => $value) {
                 if ($key == 'comment' || $key == 'photourl') {
-                    $result["data"][$parkinglot->address][$key] = explode (',', $value);
+                    array_push($result["data"][$parkinglot->address], $key => explode (',', $value);
                 } else {
-                    $result["data"][$parkinglot->address][$key] = $value;
+                    array_push($result["data"][$parkinglot->address], $key => $value);
                 }
             }
         }
@@ -106,9 +106,9 @@ class UberController extends Controller
             $prices = json_decode($response->getBody())->prices;
             foreach ($prices as $price) {
                 if ($price->localized_display_name == "uberX") {
-                    $result["data"][$parkinglot['address']]['estimate'] = $price->estimate;
-                    $result["data"][$parkinglot['address']]['duration'] = $price->duration;
-                    $result["data"][$parkinglot['address']]['distance'] = $price->distance;
+                    array_push($result["data"][$parkinglot['address']], 'estimate' => $price->estimate);
+                    array_push($result["data"][$parkinglot['address']], 'duration' => $price->duration);
+                    array_push($result["data"][$parkinglot['address']], 'distance' => $price->distance);
                     continue;
                 }
             }
