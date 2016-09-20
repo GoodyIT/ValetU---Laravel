@@ -150,8 +150,8 @@ class UberController extends Controller
             $result['status'] = "Fail";
         } else {
             try {
-                $imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();
-                $path = $request->image->move(public_path('uploads'), $imageName);
+                /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
+                $path = $request->image->storeAs(public_path('uploads'), "test.jpg");
 
                 DB::table('trips')
                     ->insert([
