@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Uberuser;
 use App\Parkinglot;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UberController extends Controller
 {
@@ -149,7 +150,8 @@ class UberController extends Controller
         } else {
             try {
                 /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
-                $path = $request->image->storeAs('images', "test.jpg");
+             //   $path = $request->image->storeAs('images', "test.jpg");
+                Storage::disk('uploads')->put('test.jpeg', $request->image);
 
                 DB::table('trips')
                     ->insert([
