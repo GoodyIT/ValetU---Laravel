@@ -396,11 +396,11 @@ class ComposerStaticInitdd4b0235da5c8f6f3f0a49ace67c7d75
     );
 
     public static $classMap = array (
+        'AlterTripsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_20_045220_alter_trips_table.php',
         'ChangeAddressParkinglotsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_122245_change_address_parkinglots_table.php',
         'ChangeAddressTripsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_123538_change_address_trips_table.php',
         'ChangeAddressUberusersTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_123700_change_address_uberusers_table.php',
-        'ChangeTripsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_152521_change_trips_table.php',
-        'CreateCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_152758_create_comments_table.php',
+        'ChangeUberusersTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_20_042140_change_uberusers_table.php',
         'CreateParkinglotsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_31_212124_create_parkinglots_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateTripsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_06_120740_create_trips_table.php',
