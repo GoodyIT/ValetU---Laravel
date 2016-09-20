@@ -8,6 +8,8 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use App\Uberuser;
 use App\Parkinglot;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 class UberController extends Controller
 {
@@ -148,14 +150,14 @@ class UberController extends Controller
         if (!isset($users->id) || $request->file('image') == null) {
             $result['status'] = "Fail";
         } else {
-            $imageName = $parkinglot_id . "_" . time() .  $request->file('image')->extension();
-            $path = $request->file('image')->storeAs('uploads', $imageName);
+            $imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();
+            $path = $request->image->move(public_path('uploads'), $imageName);
 
             DB::table('trips')
                 ->insert([
                     'parkinglot_id'=>$parkinglot_id,
                      'user_id'=>$users->id,
-                   //  'photourl'=>$path,
+                     'photourl'=>$path,
                      'star' => $star,
                      'review' => $review
                     ]);
