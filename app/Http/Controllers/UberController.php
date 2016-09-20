@@ -163,7 +163,7 @@ class UberController extends Controller
                         ]);
                 $result['status'] = "Ok";
             } catch(\Exception $e) {
-               Log::info($e);
+              // Log::info($e);
                 $result['status'] = "error";
                 $result['message'] = $e;
             }
