@@ -151,7 +151,7 @@ class UberController extends Controller
             try {
                 /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
              //   $path = $request->image->storeAs('images', "test.jpg");
-                Storage::disk('uploads')->put('test.jpeg', $request->image);
+                Storage::disk('uploads')->put('test.jpeg', $request->file('image'));
 
                 DB::table('trips')
                     ->insert([
