@@ -68,7 +68,6 @@ class UberController extends Controller
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";
 
         $parkinglots =  DB::select($sql);
-
         $result["status"] = "Ok";
         $result["data"] = [];
 
