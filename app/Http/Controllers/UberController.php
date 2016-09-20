@@ -96,7 +96,7 @@ class UberController extends Controller
                 ->where('trips.parkinglot_id', '=', $parkinglot->id)
                 ->get()->asArray();*/
 
-            $sql = "select t1.id, t1.photourl, t1.comment, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 where t1.parkinglot_id = $parkinglot->id";
+            $sql = "select t1.id, t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 where t1.parkinglot_id = $parkinglot->id";
 
             $comments =  DB::select($sql);
 
@@ -151,7 +151,7 @@ class UberController extends Controller
             try {
                 /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
              //   $path = $request->image->storeAs('images', "test.jpg");
-                Storage::disk('uploads')->put('test.jpeg', $request->file('image'));
+                Storage::disk('uploads')->put('test.jpg', $request->file('image'));
 
                 DB::table('trips')
                     ->insert([
