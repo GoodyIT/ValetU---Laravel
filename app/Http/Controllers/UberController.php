@@ -49,8 +49,6 @@ class UberController extends Controller
         }
      }
 
-
-
     public function findnearby(Request $request){
         $lat = $request->get("lat");
         $lng = $request->get("lng");
@@ -151,7 +149,7 @@ class UberController extends Controller
         } else {
             try {
                 /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
-                $path = $request->image->storeAs(public_path('uploads'), "test.jpg");
+                $path = $request->image->storeAs('uploads', "test.jpg");
 
                 DB::table('trips')
                     ->insert([
