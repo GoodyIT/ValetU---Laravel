@@ -88,7 +88,6 @@ class UberController extends Controller
               foreach ($parkinglot as $_key => $_value) {
                 $data[$_key] = $_value;
             }
-
            /* $comments = DB::table('trips')
                 ->join('uberusers', 'trips.user_id', '=', 'uberusers.id')
                 ->select('trips.*', 'contacts.phone', 'orders.price')
