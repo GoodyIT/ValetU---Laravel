@@ -141,25 +141,28 @@ class UberController extends Controller
         $review = $request->input("review");
         $star = $request->input("star");
 
-       
         $users = DB::table('uberusers')
                     ->where('uber_credential', $uuid)
-                    ->select('id')
-                    ->get();
+                    ->first();
+        $result = [];
+        if (!isset($users->id) || $request->file('image') == null) {
+            $result['status'] = "Fail";
+        } else {
+            $imageName = $parkinglot_id . "_" . time() .  $request->file('image')->extension();
+            $path = $request->file('image')->storeAs('images', $imageName);
 
-        $imageName = $parkinglot_id . "_" . time() .  $request->file('image')->extension();
-        $path = $request->image->storeAs('images', $imageName);
+            DB::table('trips')
+                ->insert([
+                    'parkinglot_id'=>$parkinglot_id,
+                     'user_id'=>$users->id,
+                   //  'photourl'=>$path,
+                     'star' => $star,
+                     'review' => $review
+                    ]);
 
-        DB::table('trips')
-            ->insert([
-                'parkinglot_id'=>$parkinglot_id,
-                 'user_id'=>$users['id'],
-                 'photourl'=>$path,
-                 'star' => $star,
-                 'review' => $review
-                ]);
-
-        $result['status'] = "Ok";
+            $result['status'] = "Ok";
+        }
+      
         return $result;
     }
 }
