@@ -162,8 +162,6 @@
             '<strong>Longitude:</strong> ' + place.geometry.location.lng() + '<br>'
             );
 
-         console.log(place);
-
             if (place.geometry.viewport) {
               map.fitBounds(place.geometry.viewport);
             } else {
