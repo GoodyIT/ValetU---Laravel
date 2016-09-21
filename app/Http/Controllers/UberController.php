@@ -24,18 +24,19 @@ class UberController extends Controller
     }
 
      public function savetoken(Request $request){
-        $token =  $request->get("token");
-        $name  =  $request->get("name");
-        $email = $request->get("email");
+        $token =  $request->input("token");
+        $name  =  $request->input("name");
+        $email = $request->input("email");
 
         $result["status"] = "error";
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-            $sql = sprintf("select * from uberusers where email='%s'", $email);
-            $users = DB::statement($sql);
+            $users = DB::table('uberusers')
+                    ->where('email', $email)
+                    ->first();
 
-            if (isset($users) && count($users) == 0 ) {
+            if (empty($users)) {
                 $sql = sprintf("INSERT INTO uberusers (name, email, uber_credential) VALUES ('%s', '%s', '%s')", $name, $email, $token);
 
                 $result["test"] = "inserted";
