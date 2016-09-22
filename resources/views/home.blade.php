@@ -116,6 +116,7 @@
       
       $(".dl-address").html(place.name);
       $(".dl-address").val(place.name);
+      $(".dl-star").val();
       updateLatLng(place.geometry.location);
     }
   }
@@ -139,8 +140,6 @@
       return;
     }
 
-  
-
     // Set the position of the marker using the place ID and location.
     
 
@@ -149,8 +148,9 @@
     myLatLng = place.geometry.location;
 
     // get the datail address
-    getAddressDetail(place.place_id);
-    }
+   getAddressDetail(place.place_id);
+      // getPlaceDetail(place.place_id);
+  }
 
    function getAddressDetail(place_id) {
       var service = new google.maps.places.PlacesService(map);
@@ -163,6 +163,7 @@
             '<strong>Latitude:</strong> ' + place.geometry.location.lat() + '<br>' +
             '<strong>Longitude:</strong> ' + place.geometry.location.lng() + '<br>'
             );
+         console.log(place);
 
             if (place.geometry.viewport) {
               map.fitBounds(place.geometry.viewport);
@@ -183,6 +184,12 @@
          }
       });
    } 
+
+   function getDefaultImage(lat, lng)
+   {
+      var url = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&fov=90&heading=235&pitch=10&key=AIzaSyC84kJp9uRzMLiXfntY5vAg95L8K5znKbY";
+   }
+
   function searchByLatLng(){
      var lat = $("#latitude-search").val();
      var lng = $("#longitude-search").val();
@@ -210,9 +217,53 @@
       $.get(url, function(data){
           // console.log(data.results[0]);
         //  parseAddress(data.results[0]);
-          getAddressDetail(data.results[0].place_id);
-      })
+        //  getAddressDetail(data.results[0].place_id);
+        getAddressDetail(data.results[0].place_id);
+      });
   }
+
+  function getPlaceDetail(placeid)
+  {
+    var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeid + "&key=AIzaSyA7yEDNx3eV1mQ-6N-p2h4dxQ8k0sDgQDg";
+
+    $.ajax({
+            url: url, 
+            type: "GET",   
+            dataType: 'json',
+            cache: false,
+            success: function(response){                          
+                alert(response);                   
+            }           
+        });    
+
+     /*$.get(url, function(data){
+        if (data.status === "Ok") {
+          place = data.result[0];
+         infowindow.setContent('<div><strong>' + place.formatted_address + '</strong><br><br>' +
+            '<strong>Types:</strong> ' + place.types + '<br>' +
+            '<strong>Latitude:</strong> ' + place.geometry.location.lat() + '<br>' +
+            '<strong>Longitude:</strong> ' + place.geometry.location.lng() + '<br>'
+            );
+
+            if (place.geometry.viewport) {
+              map.fitBounds(place.geometry.viewport);
+            } else {
+              map.setCenter(place.geometry.location);
+              map.setZoom(17);
+            }
+
+            infowindow.open(map, marker);
+            marker.setPlace({
+              placeId: place.place_id,
+              location: place.geometry.location
+            });
+            marker.setVisible(true);
+
+            parseAddress(place);
+         }
+      })*/
+  }
+
 
   function addLocations(location, name, address, types){
     var _location = {lat: location.lat(), lng: location.lng()};
@@ -239,38 +290,6 @@
     console.log(arrOfLocations);
     arrOfLocations = [];
   }
-
-  /*new Vue({
-    el: '#app',
-
-    data: {
-        formInputs: {},
-        formErrors: {}
-    },
-
-    methods: {
-        submitForm: function(e) {
-            var form = e.target;
-            var action = form.action;
-            var csrfToken = form.querySelector('input[name="_token"]').value;
-            
-            this.$http.post(action, this.formInputs, {
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                }
-            })
-            .then(function() {
-                form.submit();
-            })
-            .catch(function (data, status, request) {
-                this.formErrors = data.data;
-                console.log(status);
-                console.log(data);
-                console.log(request);
-            });
-        }
-    }
-});*/
     </script>
   <div class="site-index">
     <div class="block-header">

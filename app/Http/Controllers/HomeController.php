@@ -109,6 +109,7 @@ $user->attachRole($admin); // parameter can be an Role object, array, or id
         ]);*/
 
         // if ($request->ajax()) return;
+          $star = empty($request->get('star')) ? 0 : $request->get('star'); 
 
           $parkinglot = new Parkinglot;
           $parkinglot->title = $request->get('title');
@@ -118,7 +119,7 @@ $user->attachRole($admin); // parameter can be an Role object, array, or id
           $parkinglot->state = $request->get('state');
           $parkinglot->zipcode = $request->get('zipcode');
           $parkinglot->country = $request->get('country');
-          $parkinglot->star = 0;
+          $parkinglot->star = $star;
           $parkinglot->latitude = $request->get('latitude');
           $parkinglot->longitude = $request->get('longitude');
           $parkinglot->save();

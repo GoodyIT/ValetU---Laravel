@@ -39,6 +39,7 @@
         <input type="hidden" class="dl-zipcode" name="zipcode">
         <input type="hidden" class="dl-latitude" name="latitude">
         <input type="hidden" class="dl-longitude" name="longitude">
+        <input type="hidden" class="dl-star" name="star">
         <div class="row ">
             <div class="col-xs-5 m-l-15">
                 <dl class="dl-horizontal">
