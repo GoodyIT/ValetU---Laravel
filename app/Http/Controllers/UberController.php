@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use App\Uberuser;
+use App\Trip;
 use App\Parkinglot;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -23,6 +24,11 @@ class UberController extends Controller
        
     }
 
+    // create function for our upload page
+    public function index(){
+      return view('uploadfile');
+    }
+
      public function savetoken(Request $request){
         $token =  $request->input("token");
         $name  =  $request->input("name");
@@ -32,17 +38,24 @@ class UberController extends Controller
         if (empty($email) || empty($token) || empty($name)) {
             return json_encode($result);
         } else {
-            $users = DB::table('uberusers')
+            $uberusers = DB::table('uberusers')
                     ->where('email', $email)
                     ->first();
 
-            if (empty($users)) {
-                $sql = sprintf("INSERT INTO uberusers (name, email, uber_credential) VALUES ('%s', '%s', '%s')", $name, $email, $token);
+            if (empty($uberusers)) {
+                $uberuser = new Uberuser;
+                $uberuser->name = $name;
+                $uberuser->email = $email;
+                $uberuser->uber_credential = $token;
+                $uberuser->save();
 
                 $result["test"] = "inserted";
             } else {
-                 $sql = sprintf("UPDATE uberusers SET name='%s', uber_credential='%s' where email='%s'", $name, $token, $email);
-                  $result["test"] = "updated";
+                $uberusers->name = $name;
+                $uberusers->token = $token;
+                
+                $uberusers->save();
+                $result["test"] = "updated";
             }
             DB::statement($sql);
 
@@ -135,32 +148,37 @@ class UberController extends Controller
 
     public function savereview(Request $request)
     {
-        $uuid = $request->input("uuid");
+        $token = $request->input("token");
         $parkinglot_id = $request->input("parkinglot_id");
         $review = $request->input("review");
         $star = $request->input("star");
 
+
         $users = DB::table('uberusers')
-                    ->where('uber_credential', $uuid)
+                    ->where('uber_credential', $token)
                     ->first();
         $result = [];
-        if (!isset($users->id) || $request->file('image') == null) {
+        $file = $request ->file('image');
+        if (!isset($users->id) || $file->getClientOriginalName() == "") {
             $result['status'] = "Fail";
         } else {
             try {
                 /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
              //   $path = $request->image->storeAs('images', "test.jpg");
-                Storage::disk('uploads')->put('test.jpg', $request->file('image'));
+                // move uploaded File
+              $destinationPath = 'uploads';
+              $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName();
+              $file->move($destinationPath,$file->getClientOriginalName());
 
-                DB::table('trips')
-                    ->insert([
-                        'parkinglot_id'=>$parkinglot_id,
-                         'user_id'=>$users->id,
-                         'photourl'=>$path,
-                         'star' => $star,
-                         'review' => $review
-                        ]);
-                $result['status'] = "Ok";
+              $trip = new Trip;
+              $trip->parkinglot_id = $parkinglot_id;
+              $trip->user_id = $users->id;
+              $trip->star = $star;
+              $trip->review = $review;
+              $trip->photourl = $filename;
+              $trip->save();
+             
+              $result['status'] = "Ok";
             } catch(\Exception $e) {
                 Log::info($e);
                 $result['status'] = "error";

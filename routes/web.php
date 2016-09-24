@@ -28,6 +28,10 @@ Route::post('/tasks', 'HomeController@parkingReload');
 Route::get('/home/create', 'HomeController@create');
 Route::post('/home/store', 'HomeController@store');
 
+
+Route::get('/uploadfile', 'FileuploadingController@index');
+Route::post('/uploadfile', 'FileuploadingController@showfileupload');
+
 /*
  * Uber controller
 */
@@ -95,7 +99,20 @@ Route::get('/price', function (Illuminate\Http\Request $request) {
     return '<pre>' .json_encode((string) $response->getBody(), true). '</pre>';
 });
 
+Route::get('/images/{filename}', function ($filename)
+{
+    $path = public_path() . '/uploads/' . $filename;
 
+    if(!File::exists($path)) abort(404);
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
 
 Route::post('/uber/v1/savetoken', 'UberController@savetoken');
 

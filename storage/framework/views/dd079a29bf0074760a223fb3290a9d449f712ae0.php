@@ -188,7 +188,6 @@
       var url = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&fov=90&heading=235&pitch=10&key=AIzaSyC84kJp9uRzMLiXfntY5vAg95L8K5znKbY";
    }
 
-
   function searchByLatLng(){
      var lat = $("#latitude-search").val();
      var lng = $("#longitude-search").val();
