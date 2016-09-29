@@ -110,17 +110,17 @@ class UberController extends Controller
 
             $sql = "select t1.id, t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 where t1.parkinglot_id = $parkinglot->id";
 
-            $comments =  DB::select($sql);
+            $reviews =  DB::select($sql);
 
-            $data['comments'] = [];
+            $data['reviews'] = [];
             $numberOfPhotos = 0;
-            foreach ($comments as $commentkey => $commentvalue) {
-                foreach ($commentvalue as $subkey => $subvalue) {
+            foreach ($reviews as $reviewkey => $reviewvalue) {
+                foreach ($reviewvalue as $subkey => $subvalue) {
                     if ($subkey == "photourl" && $subvalue != null) {
                         $numberOfPhotos++;
                     }
                 }
-                array_push($data['comments'], $commentvalue);
+                array_push($data['reviews'], $reviewvalue);
             }
 
             $data['numberOfPhotos'] = $numberOfPhotos;
