@@ -77,7 +77,7 @@ class UberController extends Controller
         /*$sql = "select t1.id, t1.address, t1.latitude, t1.longitude, t2.request, t2.photourl, t2.comment, t2.star, t3.name, t3.email, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 join trips as t2 on t1.id = t2.parkinglot_id join uberusers as t3 on t2.user_id = t3.id where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";*/
-        $sql = "select t1.id, t1.address, t1.latitude, t1.longitude, t1.star, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+        $sql = "select t1.id, t1.title, t1.address, t1.latitude, t1.longitude, t1.star, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";
 
@@ -187,5 +187,12 @@ class UberController extends Controller
         }
       
         return $result;
+    }
+
+    public function savecomment(Request $request)
+    {
+        $parkinglot_id = $request->input("parkinglot_id");
+        $user_id = $request->input("user_id");
+        $review_id = $request->input("review_id");
     }
 }
