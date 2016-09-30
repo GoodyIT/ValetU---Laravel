@@ -36,11 +36,11 @@ class UberController extends Controller
 
         $result["status"] = "error";
         if (empty($email) || empty($token) || empty($name)) {
+            $result["message"] = "Input is not proper";
             return json_encode($result);
         } else {
             $uberusers = DB::table('uberusers')
-                    ->where('email', $email)
-                    ->first();
+                    ->where('email', $email);
 
             if (empty($uberusers)) {
                 $uberuser = new Uberuser;
@@ -51,13 +51,11 @@ class UberController extends Controller
 
                 $result["test"] = "inserted";
             } else {
-                $uberusers->name = $name;
-                $uberusers->token = $token;
-                
-                $uberusers->save();
+                Uberuser::where('email', $email)
+                        ->update(['name' => $name, 'uber_credential' => $token]);
+               
                 $result["test"] = "updated";
             }
-            DB::statement($sql);
 
             $result["status"] = "Ok";
             return json_encode($result);
