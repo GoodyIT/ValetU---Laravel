@@ -10,6 +10,7 @@ return array(
     'ChangeAddressParkinglotsTable' => $baseDir . '/database/migrations/2016_09_14_122245_change_address_parkinglots_table.php',
     'ChangeAddressTripsTable' => $baseDir . '/database/migrations/2016_09_14_123538_change_address_trips_table.php',
     'ChangeAddressUberusersTable' => $baseDir . '/database/migrations/2016_09_14_123700_change_address_uberusers_table.php',
+    'ChangeUbersersTable' => $baseDir . '/database/migrations/2016_09_30_064422_change_ubersers_table.php',
     'ChangeUberusersTable' => $baseDir . '/database/migrations/2016_09_20_042140_change_uberusers_table.php',
     'CreateParkinglotsTable' => $baseDir . '/database/migrations/2016_08_31_212124_create_parkinglots_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
