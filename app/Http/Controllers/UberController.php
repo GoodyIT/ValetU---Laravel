@@ -37,9 +37,9 @@ class UberController extends Controller
         $result["status"] = "error";
         if (empty($email) || empty($token) || empty($name)) {
             $result["message"] = "Input is not proper";
-            $result["name"] => $name;
-            $result["email"] => $email
-            $result["token"] => $token;
+            $result["name"] = $name;
+            $result["email"] = $email
+            $result["token"] = $token;
             return json_encode($result);
         } else {
             $uberusers = DB::table('uberusers')
