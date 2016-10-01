@@ -33,13 +33,15 @@ class UberController extends Controller
         $token =  $request->input("token");
         $name  =  $request->input("name");
         $email = $request->input("email");
+        $photoUrl = $request->input("photoUrl");
 
         $result["status"] = "error";
-        if (empty($email) || empty($token) || empty($name)) {
+        if (empty($email) || empty($token) || empty($name) || empty($photoUrl)) {
             $result["message"] = "Input is not proper";
             $result["name"] = $name;
             $result["email"] = $email;
             $result["token"] = $token;
+            $result["photoUrl"] = $photoUrl;
             return json_encode($result);
         } else {
             $uberusers = DB::table('uberusers')
@@ -50,13 +52,16 @@ class UberController extends Controller
                 $uberuser->name = $name;
                 $uberuser->email = $email;
                 $uberuser->uber_credential = $token;
+                $uberuser->photoUrl = $photoUrl;
                 $userId = $uberuser->save();
 
                 $result["test"] = "inserted";
                 $result["Id"] = $userId;
             } else {
                 Uberuser::where('email', $email)
-                        ->update(['name' => $name, 'uber_credential' => $token]);
+                        ->update(['name' => $name,
+                                 'uber_credential' => $token,
+                                 'photoUrl' => $photoUrl]);
                
                 $result["test"] = "updated";
             }

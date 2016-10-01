@@ -396,7 +396,7 @@ class ComposerStaticInitdd4b0235da5c8f6f3f0a49ace67c7d75
     );
 
     public static $classMap = array (
-        'AlterTripsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_20_045220_alter_trips_table.php',
+        'Change1UberusersTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_01_024352_change1_uberusers_table.php',
         'ChangeAddressParkinglotsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_122245_change_address_parkinglots_table.php',
         'ChangeAddressTripsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_123538_change_address_trips_table.php',
         'ChangeAddressUberusersTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_14_123700_change_address_uberusers_table.php',
