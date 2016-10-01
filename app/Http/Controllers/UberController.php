@@ -69,7 +69,7 @@ class UberController extends Controller
                 $sql = "SELECT t1.photourl as photoUrl, t1.review, t1.updated_at, t2.title as parkingPlace  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId ORDER BY t1.updated_at DESC";
 
                 $lastInfo =  DB::select($sql);
-                $result['lastParking'] = $lastInfo[0];
+                $result['lastParking'] = isset($lastInfo[0]) ? $lastInfo[0] : [];
                 $result['lastReview'] = [];
                 $result['userId'] = $userId;
                 $isLastReviewGet = false;
