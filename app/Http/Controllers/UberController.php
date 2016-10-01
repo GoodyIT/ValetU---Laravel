@@ -36,34 +36,43 @@ class UberController extends Controller
         $photoUrl = $request->input("photoUrl");
 
         $result["status"] = "error";
-        if (empty($email) || empty($token) || empty($name) || empty($photoUrl)) {
+        if (empty($email) || empty($token) || empty($name)) {
             $result["message"] = "Input is not proper";
             $result["name"] = $name;
             $result["email"] = $email;
             $result["token"] = $token;
-            $result["photoUrl"] = $photoUrl;
             return json_encode($result);
         } else {
             $uberusers = DB::table('uberusers')
                     ->where('email', $email);
 
+            $lastInfo= [];
             if (empty($uberusers)) {
                 $uberuser = new Uberuser;
                 $uberuser->name = $name;
                 $uberuser->email = $email;
                 $uberuser->uber_credential = $token;
-                $uberuser->photoUrl = $photoUrl;
                 $userId = $uberuser->save();
 
                 $result["test"] = "inserted";
                 $result["Id"] = $userId;
             } else {
-                Uberuser::where('email', $email)
+               $userId = Uberuser::where('email', $email)
                         ->update(['name' => $name,
                                  'uber_credential' => $token,
-                                 'photoUrl' => $photoUrl]);
+                                 ]);
                
                 $result["test"] = "updated";
+
+                // Get the last review & last parking
+                $sql = "SELECT t1.photourl as photoUrl, t1.review, t1.updated_at, t2.title  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId ORDER BY t1.updated_at DESC LIMIT 1";
+
+                $lastParking =  DB::select($sql);
+                $result['lastInfo'] = [];
+                $result['userId'] = $userId;
+                foreach ($lastInfo as $key => $value) {
+                    array_push($result['lastInfo'], $value);
+                }
             }
 
             $result["status"] = "Ok";
