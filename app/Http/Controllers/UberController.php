@@ -50,9 +50,10 @@ class UberController extends Controller
                 $uberuser->name = $name;
                 $uberuser->email = $email;
                 $uberuser->uber_credential = $token;
-                $uberuser->save();
+                $userId = $uberuser->save();
 
                 $result["test"] = "inserted";
+                $result["Id"] = $userId;
             } else {
                 Uberuser::where('email', $email)
                         ->update(['name' => $name, 'uber_credential' => $token]);
@@ -152,7 +153,7 @@ class UberController extends Controller
                 // move uploaded File
               $destinationPath = 'uploads';
               $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName();
-              $file->move($destinationPath,$file->getClientOriginalName());
+              $file->move($destinationPath,$filename);
 
               $trip = new Trip;
               $trip->parkinglot_id = $parkinglot_id;
