@@ -64,20 +64,26 @@ class UberController extends Controller
                
                 $result["test"] = "updated";
 
-                // Get the last review & last parking
-                $sql = "SELECT t1.photourl as photoUrl, t1.review, t1.updated_at, t2.title  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId ORDER BY t1.updated_at DESC LIMIT 1";
+                // Get the last review
+                $sql = "SELECT t1.photourl as photoUrl, t1.review, t1.updated_at, t2.title as parkingPlace  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId ORDER BY t1.updated_at DESC";
 
-                $lastParking =  DB::select($sql);
-                $result['lastInfo'] = [];
+                $lastInfo =  DB::select($sql);
+                $result['lastParking'] = $lastInfo[0];
+                $result['lastReview'] = [];
                 $result['userId'] = $userId;
-                foreach ($lastInfo as $key => $value) {
-                    array_push($result['lastInfo'], $value);
+                $isLastReviewGet = false;
+                $numberOfReviews = 0;
+                for ($i=0; $i < count($lastInfo); $i++) { 
+                    if (!$isLastReviewGet && !empty($lastInfo[$i]->review)) {
+                        array_push($result['lastReview'], $lastInfo[$i]);
+                        $isLastReviewGet = true;
+                    }
+                    $numberOfReviews++;
                 }
 
                 // Number of Parking & number of Reviews
-                $sql = "SELECT count(*) as numberOfParking  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId Group by t1.parkinglot_id";
-                $numberOfParking = DB::select($sql);
-                $result["numberOfParking"] = $numberOfParking;
+                $result["numberOfReviews"] = $numberOfReviews;
+                $result["numberOfParking"] = count($lastInfo);
             }
 
             $result["status"] = "Ok";
