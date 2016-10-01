@@ -107,7 +107,7 @@ class UberController extends Controller
                 $data[$_key] = $_value;
             }
 
-            $sql = "SELECT t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email, t2.uber_credential FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
+            $sql = "SELECT t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email, t2.uber_credential as profileId FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
 
             $reviews =  DB::select($sql);
 
