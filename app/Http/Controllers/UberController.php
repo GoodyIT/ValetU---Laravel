@@ -103,28 +103,16 @@ class UberController extends Controller
               foreach ($parkinglot as $_key => $_value) {
                 $data[$_key] = $_value;
             }
-           /* $comments = DB::table('trips')
-                ->join('uberusers', 'trips.user_id', '=', 'uberusers.id')
-                ->select('trips.*', 'contacts.phone', 'orders.price')
-                ->where('trips.parkinglot_id', '=', $parkinglot->id)
-                ->get()->asArray();*/
 
-            $sql = "select t1.id, t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 where t1.parkinglot_id = $parkinglot->id";
+            $sql = "select t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
 
             $reviews =  DB::select($sql);
 
             $data['reviews'] = [];
             $numberOfPhotos = 0;
             foreach ($reviews as $reviewkey => $reviewvalue) {
-                foreach ($reviewvalue as $subkey => $subvalue) {
-                    if ($subkey == "photourl" && $subvalue != null) {
-                        $numberOfPhotos++;
-                    }
-                }
                 array_push($data['reviews'], $reviewvalue);
             }
-
-            $data['numberOfPhotos'] = $numberOfPhotos;
 
             $prices = json_decode($response->getBody())->prices;
             foreach ($prices as $price) {
@@ -132,17 +120,12 @@ class UberController extends Controller
                     $data['estimate'] = $price->estimate;
                     $data['duration'] = $price->duration;
                     $data['distance'] = $price->distance;
-                    continue;
+                    break;
                 }
             }
 
             array_push($result["data"], $data);
         }
-/*
-           foreach ($parkinglots as $lotkey => $parkinglot) {
-            $result["data"][$lotkey] = $parkinglot;
-        }
-*/
 
         return json_encode($result);
     }
