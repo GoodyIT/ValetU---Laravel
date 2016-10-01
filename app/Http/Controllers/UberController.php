@@ -128,7 +128,7 @@ class UberController extends Controller
                 $data[$_key] = $_value;
             }
 
-            $sql = "SELECT t1.id, t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email, t2.uber_credential as profileId FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
+            $sql = "SELECT t1.id as trip_id, t1.star, t1.photourl, t1.review, t1.updated_at, t2.id as userId, t2.name, t2.email, t2.uber_credential as profileId FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
 
             $reviews =  DB::select($sql);
 
@@ -173,7 +173,7 @@ class UberController extends Controller
         } else {
             try {
               $destinationPath = 'uploads';
-              $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName();
+              $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName(). '.' .$file->getClientOriginalExtension();
               $file->move($destinationPath,$filename);
 
               $trip = new Trip;
@@ -183,6 +183,10 @@ class UberController extends Controller
               $trip->review = $review;
               $trip->photourl = $filename;
               $trip->save();
+
+              $parkinglot = Parkinglot::find($parkinglot_id);
+              $parkinglot->star = $parkinglot->star + intval($star);
+              $parkinglot->save();
              
               $result['status'] = "Ok";
             } catch(\Exception $e) {
