@@ -14,7 +14,7 @@ class Change1TripsTable extends Migration
     public function up()
     {
         Schema::table('trips', function (Blueprint $table) {
-            $table->Integer('requet');
+            $table->Integer('requet')->nullable();
         });
     }
 
