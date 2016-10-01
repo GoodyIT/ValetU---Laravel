@@ -129,3 +129,4 @@ Route::post('/uber/v1/savereview', 'UberController@savereview');
 
 Route::post('/uber/v1/savecomment', 'UberController@savecomment');
 
+Route::post('/uber/v1/saveparking', 'UberController@saveparking');

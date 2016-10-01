@@ -14,7 +14,7 @@ class Change1TripsTable extends Migration
     public function up()
     {
         Schema::table('trips', function (Blueprint $table) {
-            $table->Integer('requet')->nullable();
+            $table->Integer('request')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class Change1TripsTable extends Migration
     public function down()
     {
         Schema::table('trips', function (Blueprint $table) {
-            $table->dropColumn('requet');
+            $table->dropColumn('request');
         });
     }
 }

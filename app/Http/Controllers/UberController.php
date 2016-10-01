@@ -220,4 +220,35 @@ class UberController extends Controller
 
         return $result;
     }
+
+    public function saveparking(Request $request) {
+        $token = $request->input("token");
+        $parkinglot_id = $request->input("parkinglot_id");
+
+         $users = DB::table('uberusers')
+                    ->where('uber_credential', $token)
+                    ->first();
+        $result["status"] = [];
+        if (!isset($users->id)) {
+            $result["status"] = "fail";
+        } else {
+            try {
+                $trip = new Trip;
+                $trip->parkinglot_id = $parkinglot_id;
+                $trip->user_id = $users->id;
+                $trip->request = 1;
+                $trip->review = "";
+                $trip->star = 0;
+                $trip->save();
+
+                $result["status"] = "Ok";
+            } catch(\Exception $e) {
+                Log::info($e);
+                $result['status'] = "error";
+                $result['message'] = $e;
+            }
+        }
+
+        return $result;
+    }
 }
