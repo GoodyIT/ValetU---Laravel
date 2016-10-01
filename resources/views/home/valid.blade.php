@@ -5,7 +5,7 @@
     </div>
     <div class="pmbb-body p-l-30">
       <div class="pmbb-view" id="app">
-        <form id="testForm" class="form-horizontal" method="POST" action="{{ url('home/store') }}" role="form">
+        <form id="testForm" class="form-horizontal" method="POST" action="{{ url('admin/store') }}" role="form">
           {{ csrf_field() }}
         <div class="row">
           <div class="col-xs-5 m-l-15">

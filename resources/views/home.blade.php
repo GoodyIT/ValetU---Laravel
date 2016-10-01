@@ -235,33 +235,6 @@
                 alert(response);                   
             }           
         });    
-
-     /*$.get(url, function(data){
-        if (data.status === "Ok") {
-          place = data.result[0];
-         infowindow.setContent('<div><strong>' + place.formatted_address + '</strong><br><br>' +
-            '<strong>Types:</strong> ' + place.types + '<br>' +
-            '<strong>Latitude:</strong> ' + place.geometry.location.lat() + '<br>' +
-            '<strong>Longitude:</strong> ' + place.geometry.location.lng() + '<br>'
-            );
-
-            if (place.geometry.viewport) {
-              map.fitBounds(place.geometry.viewport);
-            } else {
-              map.setCenter(place.geometry.location);
-              map.setZoom(17);
-            }
-
-            infowindow.open(map, marker);
-            marker.setPlace({
-              placeId: place.place_id,
-              location: place.geometry.location
-            });
-            marker.setVisible(true);
-
-            parseAddress(place);
-         }
-      })*/
   }
 
 
@@ -283,7 +256,6 @@
       {
         locations:arrOfLocations
       }, function(result){
-         // console.log(result);
         $('#parking-table').html(result);
     });
 

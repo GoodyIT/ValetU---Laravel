@@ -81,10 +81,7 @@ class UberController extends Controller
             return json_encode($result);
         }
 
-        /*$sql = "select t1.id, t1.address, t1.latitude, t1.longitude, t2.request, t2.photourl, t2.comment, t2.star, t3.name, t3.email, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
- * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 join trips as t2 on t1.id = t2.parkinglot_id join uberusers as t3 on t2.user_id = t3.id where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
- * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";*/
-        $sql = "select t1.id, t1.title, t1.address, t1.latitude, t1.longitude, t1.star, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
+        $sql = "SELECT t1.id, t1.title, t1.address, t1.latitude, t1.longitude, t1.star, 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) as distance from parkinglots as t1 where 3956 * 2 * ASIN(SQRT( POWER(SIN(($lat - abs(t1.latitude)) * pi()/180 / 2),2) + COS($lat * pi()/180 ) 
  * COS(abs(t1.latitude) * pi()/180) * POWER(SIN(($lng - t1.longitude) * pi()/180 / 2),2) )) < 16 ";
 
@@ -110,7 +107,7 @@ class UberController extends Controller
                 $data[$_key] = $_value;
             }
 
-            $sql = "select t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email from trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
+            $sql = "SELECT t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email, t2.uber_credential FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
 
             $reviews =  DB::select($sql);
 
@@ -154,9 +151,6 @@ class UberController extends Controller
             $result['token'] = $token; 
         } else {
             try {
-                /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
-             //   $path = $request->image->storeAs('images', "test.jpg");
-                // move uploaded File
               $destinationPath = 'uploads';
               $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName();
               $file->move($destinationPath,$filename);

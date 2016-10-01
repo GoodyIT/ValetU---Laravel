@@ -5,7 +5,7 @@
     </div>
     <div class="pmbb-body p-l-30">
       <div class="pmbb-view" id="app">
-        <form id="testForm" class="form-horizontal" method="POST" action="<?php echo e(url('home/store')); ?>" role="form">
+        <form id="testForm" class="form-horizontal" method="POST" action="<?php echo e(url('admin/store')); ?>" role="form">
           <?php echo e(csrf_field()); ?>
 
         <div class="row">

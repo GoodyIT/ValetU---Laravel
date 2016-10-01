@@ -21,12 +21,12 @@ Route::get('/createRole', 'HomeController@createRole');
 
 Route::get('/user', 'UserController@show');
 
-Route::get('/home', 'HomeController@create');
+Route::get('/admin', 'HomeController@create');
 
 Route::post('/tasks', 'HomeController@parkingReload');
 
-Route::get('/home/create', 'HomeController@create');
-Route::post('/home/store', 'HomeController@store');
+Route::get('/admin/create', 'HomeController@create');
+Route::post('/admin/store', 'HomeController@store');
 
 Route::get('/uploadfile', 'FileuploadingController@index');
 Route::post('/uploadfile', 'FileuploadingController@showfileupload');
