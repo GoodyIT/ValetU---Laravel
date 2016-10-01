@@ -146,6 +146,7 @@ class UberController extends Controller
         $file = $request ->file('image');
         if (!isset($users->id) || $file->getClientOriginalName() == "") {
             $result['status'] = "Fail";
+            $result['token'] = $token; 
         } else {
             try {
                 /*$imageName = $parkinglot_id . "_" . time() . $request->image->getClientOriginalExtension();*/
