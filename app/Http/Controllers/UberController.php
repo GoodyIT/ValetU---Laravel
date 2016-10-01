@@ -55,7 +55,7 @@ class UberController extends Controller
                 $userId = $uberuser->save();
 
                 $result["test"] = "inserted";
-                $result["Id"] = $userId;
+                $result["userId"] = $userId;
             } else {
                $userId = Uberuser::where('email', $email)
                         ->update(['name' => $name,
@@ -73,6 +73,11 @@ class UberController extends Controller
                 foreach ($lastInfo as $key => $value) {
                     array_push($result['lastInfo'], $value);
                 }
+
+                // Number of Parking & number of Reviews
+                $sql = "SELECT count(*) as numberOfParking  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId Group by t1.parkinglot_id";
+                $numberOfParking = DB::select($sql);
+                $result["numberOfParking"] = $numberOfParking;
             }
 
             $result["status"] = "Ok";
