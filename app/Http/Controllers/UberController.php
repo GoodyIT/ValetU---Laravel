@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Uberuser;
 use App\Trip;
 use App\Parkinglot;
+use App\Comment;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -127,7 +128,7 @@ class UberController extends Controller
                 $data[$_key] = $_value;
             }
 
-            $sql = "SELECT t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email, t2.uber_credential as profileId FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
+            $sql = "SELECT t1.id, t1.photourl, t1.review, t1.updated_at, t2.id, t2.name, t2.email, t2.uber_credential as profileId FROM trips as t1 join uberusers as t2 on t1.user_id = t2.id where t1.parkinglot_id = $parkinglot->id";
 
             $reviews =  DB::select($sql);
 
@@ -196,8 +197,23 @@ class UberController extends Controller
 
     public function savecomment(Request $request)
     {
-        $parkinglot_id = $request->input("parkinglot_id");
+        $text = $request->input("comment");
         $user_id = $request->input("user_id");
-        $review_id = $request->input("review_id");
+        $trip_id = $request->input("trip_id");
+
+        $comment = new Comment;
+        $comment->user_id = $user_id;
+        $comment->trip_id = $trip_id;
+        $comment->comment = $text;
+        $commentId = $comment->save();
+
+        $result["status"] = [];
+        if ($commentId > 0) {
+            $result["status"] = "Ok";
+        } else {
+            $result["status"] = "error";
+        }
+
+        return $result;
     }
 }
