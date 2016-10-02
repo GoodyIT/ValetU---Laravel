@@ -28,10 +28,8 @@ class VerifyCsrfToken extends BaseVerifier
     {
         foreach($this->openRoutes as $route)
         {
-            if ($request->is($route))
-            {
-             return $next($request);
-            }
+           if(in_array($request->path(), $this->openRoutes))
+            return $next($request);
         }
 
         return parent::handle($request, $next);
