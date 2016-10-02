@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Http\\Middleware\\checkHeader' => $baseDir . '/app/Http/Middleware/checkHeader.php',
     'App\\Http\\Requests\\ParkinglotRequest' => $baseDir . '/app/Http/Requests/ParkinglotRequest.php',
     'App\\Parkinglot' => $baseDir . '/app/Parkinglot.php',
     'App\\Permission' => $baseDir . '/app/Permission.php',

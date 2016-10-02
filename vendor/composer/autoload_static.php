@@ -428,6 +428,7 @@ class ComposerStaticInitdd4b0235da5c8f6f3f0a49ace67c7d75
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Middleware\\checkHeader' => __DIR__ . '/../..' . '/app/Http/Middleware/checkHeader.php',
         'App\\Http\\Requests\\ParkinglotRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ParkinglotRequest.php',
         'App\\Parkinglot' => __DIR__ . '/../..' . '/app/Parkinglot.php',
         'App\\Permission' => __DIR__ . '/../..' . '/app/Permission.php',

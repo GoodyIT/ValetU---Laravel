@@ -186,7 +186,6 @@ return [
         'GoogleMaps\ServiceProvider\GoogleMapsServiceProvider',
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        Dingo\Api\Provider\LaravelServiceProvider::class
     ],
 
     /*
