@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Contracts\Auth\Guard;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
@@ -18,22 +19,21 @@ class VerifyCsrfToken extends BaseVerifier
        'uber/v1/*',
     ];
 
-     protected $except_urls = [
-        'uber/v1/savereview',
-        'uber/v1/savetoken',
-        'uber/v1/saveparking',
-        'uber/v1/savecomment',
+    private $openRoutes = 
+    [
+    'uber/v1/savetoken'
     ];
 
     public function handle($request, Closure $next)
     {
-        $regex = '#' . implode('|', $this->except_urls) . '#';
-
-        if ($this->isReading($request) || $this->tokensMatch($request) || preg_match($regex, $request->path()))
+        foreach($this->openRoutes as $route)
         {
-            return $this->addCookieToResponse($request, $next($request));
+            if ($request->is($route))
+            {
+            return $next($request);
+            }
         }
 
-        throw new TokenMismatchException;
+        return parent::handle($request, $next);
     }
 }
