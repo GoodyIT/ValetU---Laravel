@@ -16,7 +16,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except  = [
-       'uber/v1/savetoken',
+       '/uber/v1/savetoken',
     ];
 
     private $openRoutes = 

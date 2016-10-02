@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(array('prefix' => 'uber'), function() {
+    Route::resource('restful-apis','APIController');
+});
+
 Route::get('/createRole', 'HomeController@createRole');
 
 Route::get('/user', 'UserController@show');
