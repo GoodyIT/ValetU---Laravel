@@ -24,6 +24,10 @@ class VerifyCsrfToken extends BaseVerifier
         '/uber/v1/savetoken'
     ];
 
+    $routes = [
+        route('uber/v1/savetoken', [], false)
+    ];
+
    public function handle($request, Closure $next)
     {
         foreach($this->openRoutes as $route)
