@@ -19,6 +19,15 @@ class VerifyCsrfToken extends BaseVerifier
        '/uber/v1/savetoken',
     ];
 
+    protected function tokensMatch($request)
+    {
+        // Don't validate CSRF when testing.
+        if(env('APP_ENV') === 'local') {
+            return true;
+        }
+     
+        return parent::tokensMatch($request);
+    }
     /*private $openRoutes = 
     [
         'uber/v1/savetoken'
