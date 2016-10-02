@@ -113,7 +113,7 @@ Route::get('/images/{filename}', function ($filename)
     return $response;
 });
 
-Route::post('/uber/v1/savetoken', 'UberController@savetoken');
+Route::post('/uber/v1/savetoken', ['uses' => 'UberController@savetoken','middleware' => ['checkHeader']]);
 
 Route::get('/uber/v1/logintoken', 'UberController@logintoken');
 

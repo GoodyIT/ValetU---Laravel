@@ -185,7 +185,8 @@ return [
         Laratrust\LaratrustServiceProvider::class,
         'GoogleMaps\ServiceProvider\GoogleMapsServiceProvider',
         Collective\Html\HtmlServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class
+        Laravel\Passport\PassportServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class
     ],
 
     /*

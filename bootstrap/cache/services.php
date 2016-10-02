@@ -31,6 +31,7 @@
     27 => 'GoogleMaps\\ServiceProvider\\GoogleMapsServiceProvider',
     28 => 'Collective\\Html\\HtmlServiceProvider',
     29 => 'Laravel\\Passport\\PassportServiceProvider',
+    30 => 'Dingo\\Api\\Provider\\LaravelServiceProvider',
   ),
   'eager' => 
   array (
@@ -50,6 +51,7 @@
     13 => 'App\\Providers\\RouteServiceProvider',
     14 => 'Laratrust\\LaratrustServiceProvider',
     15 => 'Laravel\\Passport\\PassportServiceProvider',
+    16 => 'Dingo\\Api\\Provider\\LaravelServiceProvider',
   ),
   'deferred' => 
   array (
