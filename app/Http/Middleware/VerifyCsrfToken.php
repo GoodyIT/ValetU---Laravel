@@ -24,13 +24,13 @@ class VerifyCsrfToken extends BaseVerifier
         '/uber/v1/savetoken'
     ];
 
-    public function handle($request, Closure $next)
+   public function handle($request, Closure $next)
     {
         foreach($this->openRoutes as $route)
         {
             if ($request->is($route))
             {
-            return $next($request);
+             return $next($request);
             }
         }
 
