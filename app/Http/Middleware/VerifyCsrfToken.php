@@ -14,9 +14,9 @@ class VerifyCsrfToken extends BaseVerifier
      *
      * @var array
      */
-   /* protected $except  = [
+    protected $except  = [
        'uber/v1/*',
-    ];*/
+    ];
 
      protected $except_urls = [
         'uber/v1/savereview',
