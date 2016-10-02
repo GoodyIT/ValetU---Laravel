@@ -14,11 +14,11 @@ class VerifyCsrfToken extends BaseVerifier
      *
      * @var array
      */
-    protected $except  = [
+   /* protected $except  = [
        'uber/v1/*',
-    ];
+    ];*/
 
-    /* protected $except_urls = [
+     protected $except_urls = [
         'uber/v1/savereview',
         'uber/v1/savetoken',
         'uber/v1/saveparking',
@@ -35,5 +35,5 @@ class VerifyCsrfToken extends BaseVerifier
         }
 
         throw new TokenMismatchException;
-    }*/
+    }
 }
