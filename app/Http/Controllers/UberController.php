@@ -66,20 +66,24 @@ class UberController extends Controller
                 $result["test"] = "updated";
 
                 // Get the last review
-                $sql = "SELECT t1.photourl as photoUrl, t1.review, t1.updated_at, t2.title as parkingPlace  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId ORDER BY t1.updated_at DESC";
+                $sql = "SELECT t1.photourl as photoUrl, t1.review, t1.updated_at, t2.title as parkingPlace, t1.request  from trips as t1 join parkinglots as t2 on t1.parkinglot_id = t2.id where t1.user_id=$userId ORDER BY t1.updated_at DESC";
 
                 $lastInfo =  DB::select($sql);
-                $result['lastParking'] = isset($lastInfo[0]) ? $lastInfo[0] : [];
+                $result['lastParking'] = $lastInfo[0];
                 $result['lastReview'] = [];
                 $result['userId'] = $userId;
+                $result['lastInfo'] = $lastInfo;
                 $isLastReviewGet = false;
+                $isLastParkingGet = false;
                 $numberOfReviews = 0;
                 for ($i=0; $i < count($lastInfo); $i++) { 
                     if (!$isLastReviewGet && !empty($lastInfo[$i]->review)) {
                         array_push($result['lastReview'], $lastInfo[$i]);
                         $isLastReviewGet = true;
                     }
-                    $numberOfReviews++;
+                    if (!empty($lastInfo[$i]->review)) {
+                        $numberOfReviews++;
+                    }
                 }
 
                 // Number of Parking & number of Reviews
@@ -173,7 +177,7 @@ class UberController extends Controller
         } else {
             try {
               $destinationPath = 'uploads';
-              $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName(). '.' .$file->getClientOriginalExtension();
+              $filename = $parkinglot_id . '_' . $users->id . '_' . $file->getClientOriginalName(). '.png';
               $file->move($destinationPath,$filename);
 
               $trip = new Trip;
