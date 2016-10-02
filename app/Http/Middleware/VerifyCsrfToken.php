@@ -19,7 +19,7 @@ class VerifyCsrfToken extends BaseVerifier
        '/uber/v1/savetoken',
     ];
 
-    private $openRoutes = 
+    /*private $openRoutes = 
     [
         'uber/v1/savetoken'
     ];
@@ -37,5 +37,5 @@ class VerifyCsrfToken extends BaseVerifier
         }
 
         return parent::handle($request, $next);
-    }
+    }*/
 }
